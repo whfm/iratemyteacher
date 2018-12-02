@@ -1,0 +1,45 @@
+<% include ./partials/header %>
+    <div class="row">
+        <h1 style="text-align: center">Sign Up</h1>
+        <div style="width: 30%; margin: 25px auto;">
+            <form action="/regadm" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>User Name:</label>
+                    <input class="form-control" type="text" name="username" placeholder="User Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input class="form-control" type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input class="form-control" type="text" name="firstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input class="form-control" type="text" name="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input class="form-control" type="email" name="email" placeholder="john@doe.com" required>
+                </div>
+                <div class="form-group">
+                    <label>About me:</label>
+                    <textarea class="form-control" name="about" placeholder="About me" rows="4" cols="50" style="resize: none" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Profile Picture:</label>
+                    <input type="file" id="image" name="image" accept="image/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Admin Code:</label>
+                    <input class="form-control" type="text" name="adminCode" placeholder="Admin Code">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
+                </div>
+            </form>
+            <a href="/teachers">Go Back</a>
+        </div>
+    </div>
+<% include ./partials/footer %>

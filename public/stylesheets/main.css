@@ -1,0 +1,37 @@
+.thumbnail img {
+    width: 100%;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+#delete-form {
+    display: inline;
+}
+
+.delete-form {
+    display: inline;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-style: dashed;
+  border-width: 3px;
+    
+}
+
+.jumbotron {
+    height: 50%;
+}
+
+.well {
+    border-style: dashed;
+    border-width: 3px;
+}

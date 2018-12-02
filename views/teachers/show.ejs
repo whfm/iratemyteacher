@@ -1,0 +1,122 @@
+
+
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">IRMT</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <!--<li class="list-group-item">Info 2</li>-->
+                <!--<li class="list-group-item">Info 3</li>-->
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= Teacher.image %>">
+                <div class="caption-full">
+                    <h4><a><%=Teacher.name%></a></h4>
+                    <p><%= Teacher.description %></p>
+                    <p><em>Added by: <strong><a href="/users/<%= Teacher.author.id %>"><%= Teacher.author.username %></a></strong>, <%= moment(Teacher.createdAt).fromNow() %></em></p>
+                    <% if((currentUser && Teacher.author.id.equals(currentUser._id)) || (currentUser && currentUser.isAdmin)) { %>
+                        <a class="btn btn-xs btn-warning" href="/teachers/<%= Teacher._id %>/edit">Edit</a>
+                        <form id="delete-form" action="/teachers/<%= Teacher._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-xs btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                    <div style="margin-top: 10px;">
+                        <a class="btn btn-default" href="/teachers"><i class="fa fa-arrow-left"></i> Go back</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--Review section-->
+            <div class="thumbnail">
+                <div class="caption-full">
+                    <% if (Teacher.rating === 0) { %>
+                    <h5>
+                        <em>No reviews yet.</em>
+                    </h5>
+                    <% } else { %>
+                    <p>
+                        <span class="fa fa-star checked"></span>
+                        <% if (Teacher.rating > 1.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (Teacher.rating > 2.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (Teacher.rating > 3.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (Teacher.rating > 4.5) { %> <span class="fa fa-star checked"></span> <% } %>
+
+                        <em>(total reviews: <%= Teacher.reviews.length %>)</em>
+                    </p>
+                    <p>
+                        Current Teacher rating: <strong><%= Teacher.rating.toFixed(2) %></strong>
+                    </p>
+                    <p><h4>Latest reviews for this Teacher:</h4></p>
+                    <hr style="margin-top: 0;">
+                    <% Teacher.reviews.slice(0, 5).forEach(function(review){ %>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span class="fa fa-star checked"></span>
+                            <% if (review.rating > 1.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                            <% if (review.rating > 2.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                            <% if (review.rating > 3.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                            <% if (review.rating > 4.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                            <div>Review by: <strong><a href="/users/<%= review.author.id %>"><%= review.author.username %></a></strong></div>
+                            <span><em><%= review.updatedAt.toDateString() %></em></span>
+                        </div>
+                        <div class="col-md-9">
+                            <p style="text-align: justify; word-wrap: break-word;">
+                                <%= review.text %>
+                            </p>
+                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-xs btn-warning"
+                               href="/teachers/<%=Teacher._id %>/reviews/<%=review._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/teachers/<%=Teacher._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <% }); %>
+                    <div style="margin-bottom: 10px;">
+                        <h4><a href="/teachers/<%= Teacher._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all reviews</a></h4>
+                    </div>
+                    <% } %>
+                    <div>
+                        <a class="btn btn-primary btn-lg <% if (currentUser && Teacher.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/teachers/<%= Teacher._id %>/reviews/new">
+                            Write a New Review</a>
+                    </div>
+                </div>
+            </div>
+
+            <!--Comment section-->
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/teachers/<%= Teacher._id %>/comments/new">Add New Comment</a>
+                </div>
+                <hr>
+                <% Teacher.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><a href="/users/<%= comment.author.id %>"><%= comment.author.username %></a></strong>
+                            <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                        <% if((currentUser && Teacher.author.id.equals(currentUser._id)) || (currentUser && currentUser.isAdmin)) { %>
+                            <a class="btn btn-xs btn-warning"
+                               href="/teachers/<%=Teacher._id %>/comments/<%=comment._id %>/edit">Edit</a>
+                            <form id="delete-form" action="/teachers/<%=Teacher._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                            </form>
+                        <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

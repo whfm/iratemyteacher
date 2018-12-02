@@ -1,0 +1,56 @@
+<% include ../partials/header %>
+
+
+<style type="text/css"> 
+    .jumbotron {
+        background-image: url(https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=afe0e7b4e8a5f429a0ee91e84c1557e5&auto=format&fit=crop&w=1309&q=80);
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+</style>
+
+    
+<div class="container">
+    <header class="jumbotron vertical-center">
+        <div class="container">
+            <h1>I RATE MY TEACHER!</h1>
+            <p>Helping students, parents and teachers make informed decisions within education.</p>
+            <p><a class="btn btn-primary btn-large" href="/teachers/new">Add new Teacher</a></p>
+            <form action="/teachers" method="GET" class="form-inline" id="Teacher-search">
+                <div class="form-group">
+                  <input type="text" name="search" placeholder="Teacher search..." class="form-control">
+                  <input type="submit" value="Search" class="btn btn-default btn-outline-success">
+                </div>
+            </form>
+        </div>
+    </header>
+    
+
+    
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% Teachers.forEach(function(teacher){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= teacher.image %>">
+                <div class="caption">
+                    <h4><%= teacher.name %></h4>
+                    <% if (teacher.rating === 0) { %>
+                    <em>No reviews yet.</em>
+                    <% } else { %>
+                        <span class="fa fa-star checked"></span>
+                        <% if (teacher.rating > 1.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (teacher.rating > 2.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (teacher.rating > 3.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                        <% if (teacher.rating > 4.5) { %> <span class="fa fa-star checked"></span> <% } %>
+                    <% } %>
+                </div>
+                <p>
+                    <a href="/teachers/<%= teacher._id %>" class="btn btn-primary"><span class="fa far fa-star"></span> I rate!</a>
+                </p>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+<% include ../partials/footer %>

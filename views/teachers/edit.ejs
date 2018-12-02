@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <h1 style="text-align: center;">Editing: <%= Teacher.name %></h1>
+        <div style="width:30%; margin: 25px auto;">
+            <form action="/teachers/<%= Teacher._id %>/?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Teacher name:</label>
+                    <input class="form-control" type="text" name="name" placeholder="Teacher Name" value="<%= Teacher.name %>">
+                </div>
+                <div class="form-group">
+                    <label>Current Image</label>
+                    <!--<input class="form-control" disabled type="text" name="" placeholder="Teacher Image" value="<%= Teacher.image %>">-->
+                    <img src="<%= Teacher.image %>" alt="Smiley face" height="60" width="60">
+                </div>
+                <div class="form-group">
+                    <label>New Image?</label>
+                    <input type="file" id="image" name="image" accept="image/*" >
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input class="form-control" type="text" name="description" placeholder="Teacher Description" value="<%= Teacher.description %>">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-large btn-primary btn-block">Submit!</button>
+                </div>
+            </form>
+            <a href="/teachers">Go back</a>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,37 @@
+<% include ../partials/header %>
+
+<div class="container">
+<div class="row">
+	<div class="col-md-4">
+		<h1 class="text-center"><%= user.firstName + " " + user.lastName %></h1>
+		<% if((currentUser && currentUser.username == user.username)) { %>
+                        <div class="text-center">
+                        	<a class="btn btn-xs btn-warning" href="/users/<%= user._id %>/edit">Edit Profile</a>
+                        </div>
+                        <!--<form id="delete-form" action="/teachers/<%= user._id %>?_method=DELETE" method="POST">-->
+                        <!--    <button class="btn btn-xs btn-danger">Delete</button>-->
+                        <!--</form>-->
+        <% } %>
+			
+		<div class="thumbnail">
+			<img class="img-thumbnail" src="<%= user.avatar %>" alt="user profile image" style="width: 100%; max-width: 150px">
+			<div class="caption text-center"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+		</div>
+		<div class="thumbnail">
+		    <h4 class="text-center"><strong>User Description:</strong></h4>
+		    <hr style="width:85%; margin-top: 3%">
+		    <p style="margin-left: 5%"><%= user.about %></p>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<h3><%= user.username %>'s teachers:</h3>
+		<ul>
+		<% if(teachers.length != 0) { teachers.forEach(function(teachers) { %>
+			<li><a href="/teachers/<%= teachers.id %>"><%= teachers.name %></a></li>
+		<% }); } %>
+		</ul>
+	</div>
+</div>
+</div>
+
+<% include ../partials/footer %>
