@@ -28,15 +28,10 @@ var imageFilter = function (req, file, cb) {
 var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
-// cloudinary.config({ 
-//   cloud_name: 'walterhenrike', 
-//   api_key: process.env.CLOUDINARY_API_KEY, 
-//   api_secret: process.env.CLOUDINARY_API_SECRET
-// });
 cloudinary.config({ 
-  cloud_name: 'walterhenrike', 
-  api_key: '525274251929189', 
-  api_secret: '_nm2MkNvFdYUNpAMYZWNy5Xg7Us'
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 
@@ -74,25 +69,7 @@ router.get("/", function(req, res){
 });
 
 //CREATE - add new Teacher to the database
-// router.post("/", middleware.isLoggedIn, function(req, res) {
-//     var name = req.body.name;
-//     var price = req.body.price;
-//     var image = req.body.image;
-//     var desc = req.body.description;
-//     var author = {
-//         id: req.user._id,
-//         username: req.user.username
-//     };
-//     var newTeacher = { name: name, price: price, image: image, description: desc, author: author };
-//     Teacher.create(newTeacher, function(err, newlyCreated) {
-//       if(err) {
-//           console.log(err);
-//       } 
-//       else {
-//           res.redirect("/teachers");
-//       }
-//     });
-// });
+
 router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
     cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
       if(err) {

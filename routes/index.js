@@ -28,15 +28,10 @@ var imageFilter = function (req, file, cb) {
 var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
-// cloudinary.config({ 
-//   cloud_name: 'walterhenrike', 
-//   api_key: process.env.CLOUDINARY_API_KEY, 
-//   api_secret: process.env.CLOUDINARY_API_SECRET
-// });
 cloudinary.config({ 
-  cloud_name: 'walterhenrike', 
-  api_key: '525274251929189', 
-  api_secret: '_nm2MkNvFdYUNpAMYZWNy5Xg7Us'
+  cloud_name: process.env.CLOUDINARY_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 
@@ -81,12 +76,7 @@ router.post("/register", upload.single('image'), function(req, res, next){
         req.flash('error', err.message);
         return res.redirect('back');
       }
-      // add cloudinary url for the image to the teacher object under image property
-      //req.body.teacher.image = result.secure_url;
-      // add image's public_id to teacher object
-      //req.body.teacher.imageId = result.public_id;
-      // add author to teacher
-    
+
     var checkErr = false;
     
     var newUser = new User({
